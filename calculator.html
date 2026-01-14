@@ -165,22 +165,25 @@
                 shouldResetDisplay = false;
             }
             
-            if (!currentInput.includes('.')) {
+            const lastOperand = currentInput.split(/[+\-×/]/).pop();
+            if (!lastOperand.includes('.')) {
                 currentInput += '.';
                 updateDisplay();
             }
         }
 
         function appendOperator(operator) {
+            const normalizedOperator = operator === '*' ? '×' : operator;
+            
             if (shouldResetDisplay) {
                 shouldResetDisplay = false;
             }
             
             const lastChar = currentInput[currentInput.length - 1];
-            if (['+', '-', '*', '/'].includes(lastChar)) {
-                currentInput = currentInput.slice(0, -1) + operator;
+            if (['+', '-', '×', '/'].includes(lastChar)) {
+                currentInput = currentInput.slice(0, -1) + normalizedOperator;
             } else {
-                currentInput += operator;
+                currentInput += normalizedOperator;
             }
             updateDisplay();
         }
